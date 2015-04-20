@@ -46,3 +46,4 @@ end
 #0419
   gem 'paperclip'
   gem 'omniauth-facebook'
+  gem 'devise'
