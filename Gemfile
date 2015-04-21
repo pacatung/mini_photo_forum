@@ -47,3 +47,9 @@ end
   gem 'paperclip'
   gem 'omniauth-facebook'
   gem 'devise'
+
+  gem 'bootstrap-sass'
+  gem 'autoprefixer-rails'
+
+# 排序
+  gem 'ransack'
