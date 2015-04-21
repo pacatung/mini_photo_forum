@@ -1,1 +1,12 @@
 <h1>photos/index.html</h1>
+
+<% @photos.each do |photo| %>
+  <ul>
+  <%= link_to 'Show', :controller => 'photos', :action => 'show', :id => photo %>
+  <%#= button_to 'Show', photo_path(photo), method: :get %>
+  <%= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo %>
+  <%#= link_to 'Edit', edit_photo_url(photo) %>
+  <%= link_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo %>
+  <%#= button_to 'Delete', photo_path(photo), :data => {:confirm => "r u sure?"}, :method => :delete %>
+  </ul>
+<% end %>
