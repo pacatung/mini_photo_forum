@@ -33,7 +33,12 @@ class PhotosController < ApplicationController
   end
 
   def update
-
+    if @photo.update(photo_params)
+      flash[:notice] = "Photo was successfully updated."
+      redirect_to photo_path
+    else
+      render :action => :edit
+    end
   end
 
   def destroy
