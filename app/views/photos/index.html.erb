@@ -1,14 +1,19 @@
 <h1>photos/index.html</h1>
 
+  <%= link_to 'new photo', new_photo_path, :class => "btn btn-danger pull-right" %>
   <%= button_to 'new photo', new_photo_path, :class => "btn btn-danger pull-right" %>
+
   <br>
 <% @photos.each do |photo| %>
   <div>
     <%= link_to photo.title, photo_path(photo) %>
 
-      <%= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo, :class => "pull-right" %>
-      <%= link_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo , :class => "pull-right"%><br>
+      <%#= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo, :class => "text-right" %>
+      <%= link_to 'Edit', edit_photo_url(photo) %>
 
+      <%#= link_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo , :class => "pull-right", :data => {:confirm => "r u sure?"}, :method => :delete %>
+      <%= link_to 'Delete', photo_path(photo), :data =>{:confirm => "r u sure?"}, :method => :delete %>
+    <br>
   </div>
   <%#= photo.pic %>
   <%= image_tag( photo.pic(:medium) ) %> <br>

@@ -42,7 +42,11 @@ class PhotosController < ApplicationController
   end
 
   def destroy
+    @photo.destroy
 
+    flash[:alert] = "Photo was successfully deleted."
+
+    redirect_to photos_path
   end
 
 private
