@@ -8,14 +8,23 @@ class PhotosController < ApplicationController
   end
 
   def new
-
+    @photo = Photo.new
   end
 
   def create
+    @photo = Photo.new(photo_params)
+    # @photo.user = current_user
 
+    if @photo.save
+      flash[:notice] = "Photo was successfully created."
+      redirect_to photos_path
+    else
+      render :action => :new
+    end
   end
 
   def show
+    @page_title = @photo.title
 
   end
 
@@ -31,10 +40,14 @@ class PhotosController < ApplicationController
 
   end
 
-protected
+private
 
   def set_photo
     @photo = Photo.find(params[:id])
+  end
+
+  def photo_params
+    params.require(:photo).permit(:title, :description, :pic)
   end
 
 end

@@ -1,0 +1,9 @@
+<h1>show.html</h1>
+
+<%= @photo.title %>
+<br>
+<%= image_tag( @photo.pic(:medium) ) %>
+<br>
+<%= simple_format(@photo.description) %>
+
+<%= link_to 'Back to index', photos_path %>
