@@ -8,7 +8,17 @@ Rails.application.routes.draw do
 
   # See how all your routes lay out with "rake routes".
 
-  resources :photos
+  resources :photos do
+    resources :comments
+    resources :likes
+
+    member do
+      post :subscribe
+      post :unsubscribe
+    end
+  end
+
+  resources :users
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

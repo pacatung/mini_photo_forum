@@ -1,32 +1,51 @@
 <h1>photos/index.html</h1>
 
-  <%= link_to 'new photo', new_photo_path, :class => "btn btn-danger pull-right" %>
-  <%= button_to 'new photo', new_photo_path, :class => "btn btn-danger pull-right" %>
+  <%= link_to 'new photo', new_photo_path, :class => "btn btn-danger" %>
+  <%= button_to 'new photo', new_photo_path, :method => 'get', :class => "btn btn-danger" %>
 
   <br>
 <% @photos.each do |photo| %>
   <div>
-    <%= link_to photo.title, photo_path(photo) %>
-
+    <%= link_to photo.title, photo_path(photo)  %>
+    <div class="pull-right">
       <%#= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo, :class => "text-right" %>
-      <%= link_to 'Edit', edit_photo_url(photo) %>
+      <%= link_to 'Edit', edit_photo_url(photo), :class => 'text-right' %>
 
       <%#= link_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo , :class => "pull-right", :data => {:confirm => "r u sure?"}, :method => :delete %>
       <%= link_to 'Delete', photo_path(photo), :data =>{:confirm => "r u sure?"}, :method => :delete %>
-    <br>
+    <br></div>
   </div>
   <%#= photo.pic %>
-  <%= image_tag( photo.pic(:medium) ) %> <br>
+  <%= link_to image_tag(photo.pic.url(:medium)), photo.pic.url, :target => "_blank" %> <br>
   <%= photo.description %>
-
   <ul>
-  <%#= link_to 'Show', :controller => 'photos', :action => 'show', :id => photo %>
-  <%#= button_to 'Show', photo_path(photo), method: :get %>
-  <%#= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo %>
-  <%#= link_to 'Edit', edit_photo_url(photo) %>
-  <%#= link_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo %><br>
-  <%#= button_to 'Delete', photo_path(photo), :data => {:confirm => "r u sure?"}, :method => :delete %>
+    <%#= link_to 'Show', :controller => 'photos', :action => 'show', :id => photo %>
+    <%#= button_to 'Show', photo_path(photo), method: :get %>
+    <%#= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo %>
+    <%#= link_to 'Edit', edit_photo_url(photo) %>
+    <!-- <%#= link_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo %><br> -->
+    <%#= button_to 'Delete', photo_path(photo), :data => {:confirm => "r u sure?"}, :method => :delete %>
   </ul>
+
+  <div id="photo-comments-<%= photo.id %>">
+    <ul>
+    <% photo.comments.each do |comment| %>
+      <li>
+        <%= comment.content %>
+        by
+        <%#= link_to comment.user.name, user_path(comment.user) %>
+        at
+        <%= comment.created_at.to_s(:short) %>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <%= form_for Comment.new, :url => photo_comments_path(photo) do |f| %>
+    <%= f.text_field :content %>
+    <%= f.submit %>
+  <% end %>
+
 <% end %>
 
 

@@ -10,14 +10,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  ### devise 本身就有current_user 這個方法  ###
-  # def current_user
-  #   if session[:user_id]
-  #     User.find( session[:user_id] )
-  #   else
-  #     nil
-  #   end
-  # end
+  ### devise 本身就有current_user 這個方法  ### 覆寫!!
+   def current_user
+     if session[:user_id]
+       User.find( session[:user_id] )
+     else
+       nil
+     end
+   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :username

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422174251) do
+ActiveRecord::Schema.define(version: 20150423120518) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20150422174251) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "comments", ["photo_id"], name: "index_comments_on_photo_id"
+  add_index "comments", ["uesr_id"], name: "index_comments_on_uesr_id"
 
   create_table "photos", force: :cascade do |t|
     t.string   "title"
@@ -30,7 +33,10 @@ ActiveRecord::Schema.define(version: 20150422174251) do
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.integer  "uesr_id"
   end
+
+  add_index "photos", ["uesr_id"], name: "index_photos_on_uesr_id", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
