@@ -53,3 +53,5 @@ end
 
 # 排序
   gem 'ransack'
+
+  gem "letter_opener", :group => :development

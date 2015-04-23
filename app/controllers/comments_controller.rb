@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 
     @photo = Photo.find( params[:photo_id] )
     @comment = @photo.comments.build( comment_params )
-    # @comment.user = current_user
+    @comment.user = current_user
 
     @comment.save!
 

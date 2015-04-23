@@ -19,7 +19,7 @@
         <%= link_to('登入', new_session_path(:user)) %> |
       <% end %>
       <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>  |
-      user name=<%#= users.name%>
+      user name=<%#= current_user.name%>
 
     <%= yield %>
 
