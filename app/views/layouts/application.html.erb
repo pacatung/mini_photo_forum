@@ -12,6 +12,7 @@
       <p class="alert"><%= alert %></p>
 
        <% if current_user %>
+        Hi, <%= link_to current_user.name, user_path(current_user) %>
         <%= link_to('登出', destroy_user_session_path, :method => :delete) %> |
         <%= link_to('修改密碼', edit_registration_path(:user)) %> |
       <% else %>
@@ -19,7 +20,7 @@
         <%= link_to('登入', new_session_path(:user)) %> |
       <% end %>
       <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>  |
-      user name=<%#= current_user.name%>
+      user name=<%= current_user.name%>
 
     <%= yield %>
 
