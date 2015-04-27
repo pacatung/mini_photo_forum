@@ -1,5 +1,5 @@
 <h1>show.html</h1>
-<h2>Like photos</h2>
+
 
 <%= @photo.title %>
 <br>
@@ -7,13 +7,35 @@
 <br>
 <%= simple_format(@photo.description) %>
 
+
+
+<% like = @photo.find_like_by_user(current_user) %>
+  <!-- using ajax to like/dislike -->
+  <div id="photo-like-<%= @photo.id %>">
+    <%= render :partial => "likes/show", :locals => { :photo => @photo, :like => like } %>
+  </div>
+
+  <div id="photo-comments-<%= @photo.id %>">
+    <ul>
+    <% @photo.comments.each do |comment| %>
+      <li>
+        <%= comment.content %>
+ <!-- 這行會壞掉 -->
+        <%#= link_to comment.user.name, user_path(comment.user) %>
+        <div class="pull-right">
+          <%= comment.created_at.to_s(:short) %>
+        </div>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+
 <%= link_to 'Back to index', photos_path %>
-
-<%= @user.name %>
-
+<%#= @user.name %>
 
 
-<!--  <% @user.like_photos.each do |photo| %>
-   <%= photo.title %>
- <% end %>
- -->
+
+  <%# @user.like_photos.each do |photo| %>
+   <%#= photo.title %>
+  <%# end %>

@@ -49,6 +49,24 @@ class PhotosController < ApplicationController
     redirect_to photos_path
   end
 
+  def subscribe
+    @photo = Photo.find(params[:id])
+    existing_subscription = @photo.find_subscription_by_user(current_user)
+    unless existing_subscription
+      @subscription = Subscription.create(:user => current_user, :photo => @photo)
+    end
+
+    redirect_to :back
+  end
+
+  def unsubscribe
+    @photo = Photo.find(params[:id])
+    existing_subscription = @photo.find_subscription_by_user(current_user)
+
+    existing_subscription.destroy
+    redirect_to :back
+  end
+
 private
 
   def set_photo

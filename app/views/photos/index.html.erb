@@ -33,7 +33,7 @@
     <%#= link_to u.name, user_path(u) %>
   <%# end %>
 
-  <% like = photo.find_like_by_user(current_user) %>
+  <%# like = photo.find_like_by_user(current_user) %>
 
   <%# if like %>
     <%#= link_to "DisLike", photo_like_path(photo, like), :method => :delete %>
@@ -43,7 +43,20 @@
 
   <!-- using ajax to like/dislike -->
   <div id="photo-like-<%= photo.id %>">
+    <% like = photo.find_like_by_user(current_user) %>
     <%= render :partial => "likes/show", :locals => { :photo => photo, :like => like } %>
+  </div>
+
+<div class="clearfix"></div>
+
+<!-- subscribe/unsubscripbe -->
+  <div id="photo-subscribe-<%= photo.id %>">
+    <% subscribe = photo.find_subscription_by_user(current_user) %>
+    <% if subscribe %>
+      <%= link_to "[Unsubscribe]", unsubscribe_photo_path(photo), :method => :post %>
+    <% else %>
+      <%= link_to "[Subscribe]", subscribe_photo_path(photo), :method => :post %>
+    <% end %>
   </div>
 
   <div id="photo-comments-<%= photo.id %>">

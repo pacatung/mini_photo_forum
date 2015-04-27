@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
   has_many :likes
   has_many :like_photos, :through => :likes, :source => "photo"
 
+  has_many :subscriptios
+  has_many :subscriptios_photos, :through => :subscriptios, :source => "photo"
+  # has_many :subscribed_photos, :through => :subscriptions, :source => "photo"
+
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email

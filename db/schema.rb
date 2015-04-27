@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424025717) do
+ActiveRecord::Schema.define(version: 20150427120329) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
@@ -47,6 +47,17 @@ ActiveRecord::Schema.define(version: 20150424025717) do
   end
 
   add_index "photos", ["user_id"], name: "index_photos_on_user_id", unique: true
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "photo_id",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "subscriptions", ["photo_id"], name: "index_subscriptions_on_photo_id"
+  add_index "subscriptions", ["user_id", "photo_id"], name: "index_subscriptions_on_user_id_and_photo_id", unique: true
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
