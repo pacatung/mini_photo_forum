@@ -15,4 +15,7 @@ class Photo < ActiveRecord::Base
   def find_like_by_user(user)
     self.likes.where( :user_id => user.id ).first
   end
+
+
+
 end

@@ -1,19 +1,19 @@
 <h1>photos/index.html</h1>
-<h2><%= current_user || 'not login'%></h2>
+<%#= current_user || 'not login'%>
 
-  <%= link_to 'new photo', new_photo_path, :class => "btn btn-danger" %>
+  <%#= link_to 'new photo', new_photo_path, :class => "btn btn-danger" %>
   <%= button_to 'new photo', new_photo_path, :method => 'get', :class => "btn btn-danger" %>
 
   <br>
 <% @photos.each do |photo| %>
   <div>
     <%= link_to photo.title, photo_path(photo)  %>
-    <div class="pull-right">
+      <div class="photos-edit pull-right">
       <%#= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo, :class => "text-right" %>
-      <%= link_to 'Edit', edit_photo_url(photo), :class => 'text-right' %>
+      <%= link_to 'Edit', edit_photo_url(photo) %>
 
-      <%#= link_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo , :class => "pull-right", :data => {:confirm => "r u sure?"}, :method => :delete %>
-      <%= link_to 'Delete', photo_path(photo), :data =>{:confirm => "r u sure?"}, :method => :delete %>
+      <%#= l  ink_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo , :class => "pull-right", :data => {:confirm => "r u sure?"}, :method => :delete %>
+      <%= link_to 'X', photo_path(photo), :data =>{:confirm => "r u sure?"}, :method => :delete %>
     <br></div>
   </div>
   <%#= photo.pic %>
@@ -28,28 +28,34 @@
     <%#= button_to 'Delete', photo_path(photo), :data => {:confirm => "r u sure?"}, :method => :delete %>
   </ul>
 
-  <p><%= photo.likes_count %>'s people like</p>
-  <% photo.like_users.each do |u| %>
-    <%= link_to u.name, user_path(u) %>
-  <% end %>
+  <!-- <p><%= photo.likes_count %>'s people like this.</p> -->
+  <%# photo.like_users.each do |u| %>
+    <%#= link_to u.name, user_path(u) %>
+  <%# end %>
 
   <% like = photo.find_like_by_user(current_user) %>
 
-  <% if like %>
-    <%= link_to "disLike", photo_like_path(photo, like), :method => :delete %>
-  <% else %>
-   <%= link_to "Like", photo_likes_path(photo), :method => :post %>
-  <% end %>
+  <%# if like %>
+    <%#= link_to "DisLike", photo_like_path(photo, like), :method => :delete %>
+  <%# else %>
+   <%#= link_to "Like", photo_likes_path(photo), :method => :post %>
+  <%# end %>
+
+  <!-- using ajax to like/dislike -->
+  <div id="photo-like-<%= photo.id %>">
+    <%= render :partial => "likes/show", :locals => { :photo => photo, :like => like } %>
+  </div>
 
   <div id="photo-comments-<%= photo.id %>">
     <ul>
     <% photo.comments.each do |comment| %>
       <li>
         <%= comment.content %>
-        by
+
         <%#= link_to comment.user.name, user_path(comment.user) %>
-        at
-        <%= comment.created_at.to_s(:short) %>
+        <div class="pull-right">
+          <%= comment.created_at.to_s(:short) %>
+        </div>
       </li>
     <% end %>
     </ul>
@@ -61,5 +67,4 @@
   <% end %>
 
 <% end %>
-
 
