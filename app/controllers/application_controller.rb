@@ -6,9 +6,14 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  #helper_method 宣告給view 用
   helper_method :current_user
 
   protected
+
+  def set_photo
+    @photo = Photo.find( params[:photo_id] )
+  end
 
   ### devise 本身就有current_user 這個方法  ### 覆寫!!
   # def current_user

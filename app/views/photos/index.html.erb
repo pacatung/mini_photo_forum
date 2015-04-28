@@ -2,22 +2,28 @@
 <%#= current_user || 'not login'%>
 
   <%#= link_to 'new photo', new_photo_path, :class => "btn btn-danger" %>
-  <%= button_to 'new photo', new_photo_path, :method => 'get', :class => "btn btn-danger" %>
+  <%= button_to 'New Post', new_photo_path, :method => 'get', :class => "btn btn-danger" %>
 
   <br>
 <% @photos.each do |photo| %>
   <div>
     <%= link_to photo.title, photo_path(photo)  %>
-      <div class="photos-edit pull-right">
-      <%#= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo, :class => "text-right" %>
-      <%= link_to 'Edit', edit_photo_url(photo) %>
 
-      <%#= l  ink_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo , :class => "pull-right", :data => {:confirm => "r u sure?"}, :method => :delete %>
-      <%= link_to 'X', photo_path(photo), :data =>{:confirm => "r u sure?"}, :method => :delete %>
-    <br></div>
+      <% if photo.can_edit_by_user?(current_user) %>
+        <div class="photos-edit pull-right">
+        <%#= link_to 'Edit', :controller => 'photos', :action => 'edit', :id => photo, :class => "text-right" %>
+        <%= link_to 'Edit', edit_photo_url(photo) %>
+
+        <%#= l  ink_to 'Delete', :controller => 'photos', :action => 'destroy', :id => photo , :class => "pull-right", :data => {:confirm => "r u sure?"}, :method => :delete %>
+        <%= link_to 'X', photo_path(photo), :data =>{:confirm => "r u sure?"}, :method => :delete %>
+        <br>
+        </div>
+      <% end %>
+
   </div>
   <%#= photo.pic %>
-  <%= link_to image_tag(photo.pic.url(:medium)), photo.pic.url, :target => "_blank" %> <br>
+  <%#= link_to image_tag(photo.pic.url(:medium)), photo.pic.url, :target => "_blank" %>
+  <%= link_to image_tag(photo.pic.url(:medium)), edit_photo_url(photo) %><br> <br>
   <%= photo.description %>
   <ul>
     <%#= link_to 'Show', :controller => 'photos', :action => 'show', :id => photo %>
@@ -65,6 +71,7 @@
       <li>
         <%= comment.content %>
 
+ <!-- 這行會壞掉 -->
         <%#= link_to comment.user.name, user_path(comment.user) %>
         <div class="pull-right">
           <%= comment.created_at.to_s(:short) %>
@@ -74,8 +81,8 @@
     </ul>
   </div>
 
-  <%= form_for Comment.new, :url => photo_comments_path(photo) do |f| %>
-    <%= f.text_field :content %>
+  <%= form_for Comment.new, :remote => true, :url => photo_comments_path(photo) do |f| %>
+    <%= f.text_area :content %>
     <%= f.submit %>
   <% end %>
 

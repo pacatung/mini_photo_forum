@@ -1,19 +1,18 @@
 class LikesController < ApplicationController
 
-  def create
-    # photo = Photo.find(params[:photo_id])
-    # Like.create(:user => current_user, :photo => photo)
-    # redirect_to :back
+  before_action :authenticate_user!
+  before_action :set_photo
 
+  def create
     # using Ajax to like
-    @photo = Photo.find(params[:photo_id])
     existing_like = @photo.find_like_by_user(current_user)
+
     unless existing_like
       @like = Like.create(:user => current_user, :photo => @photo)
     end
 
-    response_to do |format|
-      format.html{ redirect_to :back}
+    respond_to do |format|
+      format.html{ redirect_to :back }
       format.js{
         @photo.reload
         render :template => "likes/reload"
@@ -22,12 +21,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    # like = current_user.likes.find( params[:id] )
-    # like.destroy
-    # redirect_to :back
-
     # using Ajax to dislike
-    @photo = Photo.find( params[:photo_id] )
     @like = current_user.likes.find( params[:id] )
     @like.destroy
     @like = nil

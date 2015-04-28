@@ -1,7 +1,6 @@
 class Comment < ActiveRecord::Base
 
-  belongs_to :map
+  belongs_to :photo
   belongs_to :user
-
 
 end

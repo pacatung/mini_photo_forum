@@ -1,19 +1,23 @@
 class CommentsController < ApplicationController
 
-  def create
+  before_action :authenticate_user!
+  before_action :set_photo
 
-    @photo = Photo.find( params[:photo_id] )
+  def create
     @comment = @photo.comments.build( comment_params )
     @comment.user = current_user
 
     @comment.save!
-
     #@comment.notify!
 
-    redirect_to root_url
+    respond_to do |format|
+      format.html{ redirect_to root_url }
+      format.js{ render :template => "comments/create" }
+    end
+
   end
 
-protected
+  protected
 
   def comment_params
     params.require(:comment).permit(:content)

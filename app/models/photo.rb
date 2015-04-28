@@ -14,12 +14,16 @@ class Photo < ActiveRecord::Base
   has_many :subscriptions
   has_many :subscription_users, :through => :subscriptions, :source => "user"
 
+  def can_edit_by_user?(user)
+    user && self.user == user
+  end
+
   def find_like_by_user(user)
-    self.likes.where( :user_id => user.id ).first
+    user && self.likes.where( :user_id => user.id ).first
   end
 
   def find_subscription_by_user(user)
-    self.subscriptions.where(:user_id => user.id).first
+    user && self.subscriptions.where(:user_id => user.id).first
   end
 
 end

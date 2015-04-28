@@ -1,12 +1,11 @@
 <h1>show.html</h1>
 
-
 <%= @photo.title %>
 <br>
-<%= image_tag( @photo.pic(:medium) ) %>
+<%#= image_tag( @photo.pic(:medium) ) %>
+<%= link_to image_tag(@photo.pic.url(:medium)), @photo.pic.url, :target => "_blank" %>
 <br>
 <%= simple_format(@photo.description) %>
-
 
 
 <% like = @photo.find_like_by_user(current_user) %>
