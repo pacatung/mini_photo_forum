@@ -68,12 +68,12 @@
   <div id="photo-comments-<%= photo.id %>">
     <ul>
     <% photo.comments.each do |comment| %>
-      <li>
+      <li id="<%= comment.id %>">
         <%= comment.content %>
 
- <!-- 這行會壞掉 -->
-        <%#= link_to comment.user.name, user_path(comment.user) %>
+        <%= link_to comment.user.name, user_path(comment.user) %>
         <div class="pull-right">
+          <%= link_to 'X', photo_comment_path(photo, comment), method: :delete, remote: true %>
           <%= comment.created_at.to_s(:short) %>
         </div>
       </li>

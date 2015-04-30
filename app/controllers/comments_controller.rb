@@ -14,7 +14,16 @@ class CommentsController < ApplicationController
       format.html{ redirect_to root_url }
       format.js{ render :template => "comments/create" }
     end
+  end
 
+  def destroy
+    @comment = @photo.comments.find(params[:id])
+    @comment.destroy
+
+    respond_to do |format|
+      # format.html { redirect_to root_url }
+      format.js{ render :template => "comments/destroy" }
+    end
   end
 
   protected
