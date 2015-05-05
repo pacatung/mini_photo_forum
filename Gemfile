@@ -4,7 +4,11 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
+
+# change to mysql
+gem 'mysql2'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -55,3 +59,7 @@ end
   gem 'ransack'
 
   gem "letter_opener", :group => :development
+
+  gem 'capistrano-rails', :group => :development
+  gem 'capistrano-passenger', :group => :development
+
